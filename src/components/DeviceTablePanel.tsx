@@ -10,16 +10,7 @@ interface Props extends PanelProps<SimpleOptions> {}
 export const DeviceTablePanel: React.FC<Props> = ({ options, data, width, height }) => {
   const [orgID,setOrgID] = useState()
   const [adminStatus,setAdminStatus] = useState();
-  interface Devices {
-    uuid: string, 
-    deviceID: string,
-    name: string,
-    locationID: string,
-    location: string,
-    tags: string,
-    status: string;
-  } 
-const [deviceList, setDeviceList] = useState<Array<Devices>>([]);
+  const [deviceList, setDeviceList] = useState([] as any);
 
   const [table,setTable] = useState();
   const [idToEdit,setIDToEdit] = useState();
