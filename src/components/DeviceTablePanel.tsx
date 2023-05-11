@@ -68,7 +68,7 @@ const [deviceList, setDeviceList] = useState<Array<Devices>>([]);
     const getLocations = async () => {
       const res = await axios.get(' https://or7f7hhi9c.execute-api.us-east-1.amazonaws.com/dev/getdata',{params: {organizationID: orgID}})
       let fetchedData = res.data
-      let options : {label: string, value: string}[] = []
+      let options: Array<{label: string, value: string}> = []
       for (let i = 0;i<fetchedData.length;i++){
         options.push(
           {
@@ -86,15 +86,14 @@ const [deviceList, setDeviceList] = useState<Array<Devices>>([]);
     // * Get location list on render
     const getDevices = async () => {
       const res = await axios.get('https://iclrp6escf.execute-api.us-east-1.amazonaws.com/dev/getdata',{params: {organizationID: orgID}})
-      console.log("RES",res)
       let deviceData= res.data
-      let deviceInfo: {uuid: string, deviceID: string,name: string,locationID: string,location: string,tags: string,status: string}[] = []
+      let deviceInfo: Array<{uuid: string, deviceID: string,name: string,locationID: string,location: string,tags: string,status: string}> =[]
       for (let i = 0; i < deviceData.length;i++){
         let locationName = ''
         let locationID = ''
         // ! do we have to loop through to get locations?
         for (let j = 0; j < locationOptions.length;j++){
-          if (locationOptions[j]['value'] == deviceData[i]['locationID']){
+          if (locationOptions[j]['value'] === deviceData[i]['locationID']){
             locationID = locationOptions[j]['value']
               locationName = locationOptions[j]['label']
           }
@@ -155,15 +154,15 @@ const [deviceList, setDeviceList] = useState<Array<Devices>>([]);
       let deviceName = ''
       let deviceID = ''
       for (let i = 0; i < deviceList.length;i++){
-        if (deviceList[i]['uuid'] == deviceUUID){
+        if (deviceList[i]['uuid'] === deviceUUID){
           deviceName = (deviceList[i]['name'])
           deviceID = (deviceList[i]['deviceID'])
         }
       }
-      if (event.target.checked == true){
+      if (event.target.checked === true){
         axios.post(' https://iclrp6escf.execute-api.us-east-1.amazonaws.com/dev/mqttcontrols',{id:event.target.id,deviceName:deviceName,deviceID:deviceID,deviceStatus: 'On'}).then((res)=>{console.log(res)}).catch((err)=>console.log(err))
       }
-      if (event.target.checked == false){
+      if (event.target.checked === false){
         axios.post(' https://iclrp6escf.execute-api.us-east-1.amazonaws.com/dev/mqttcontrols',{id:event.target.id,deviceName:deviceName,deviceID:deviceID,deviceStatus: 'Off'}).then((res)=>{console.log(res)}).catch((err)=>console.log(err))
       }
     }
@@ -241,7 +240,7 @@ const [deviceList, setDeviceList] = useState<Array<Devices>>([]);
   // IoT Functions
   const handleDeviceStatus = (deviceStatus: any) =>{
     console.log(deviceStatus)
-    if (deviceStatus == 'On'){
+    if (deviceStatus === 'On'){
       return true
     }
     else{
@@ -317,7 +316,7 @@ const [deviceList, setDeviceList] = useState<Array<Devices>>([]);
       <Modal title ={"Edit a device"} isOpen = {editOpen}
       >
         
-        <Label children = {'UUID: ' + idToEdit}></Label>
+        <Label >UUID: {idToEdit}</Label>
 
         <InlineField  label = "Device ID" >
           <Input placeholder = {addedID} onChange = {handleID}/>
