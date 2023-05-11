@@ -1,6 +1,6 @@
 {
   "name": "devicestable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Displays the monitored devices for the organization",
   "scripts": {
     "build": "webpack -c ./.config/webpack/webpack.config.ts --env production",
